@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
-import './homepage.css'
+import React from 'react';
+import './home.css'
+import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
+import { signOut } from 'aws-amplify/auth';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-const homepage = () => {
-    return(
-        <div id="mainpage">
+const Home = ({signOut, user}) => {
+  return (
+    <div id="mainpage">
       <div className="container">
-        <button id="loginBtn">Login</button>
-        <button id="registerBtn">Register</button>
+          <Heading level={1}> Hello {user.username}</Heading>
+          <button onClick={signOut}>Sign Out</button>
       </div>
       <table>
         <caption> All Games Played</caption>
@@ -82,6 +86,6 @@ const homepage = () => {
         <th><a href="#" onclick="return show('dropped');">Games/Dropped Quit</a></th>
       </table>
     </div>
-    )
+  )
 }
-export default LoginSignup
+export default withAuthenticator(Home);

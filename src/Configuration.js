@@ -1,9 +1,6 @@
-const awsExports={
-    Auth:{
-        'userPoolId':'us-east-2_5Tj3Nt9Di',
-        'userPoolWebClientId':'5fhvbcbqi2n95pi9a7e3qjfsrs'
-        
-    }
+export const awsExports = {
+    "REGION": "us-east-1",
+    "USER_POOL_ID": "us-east-1_iDjdVVOff",
+    "USER_POOL_CLIENT_ID": "6k79o93ocgg1akjok127trcjf6"
 }
-
 export default awsExports
