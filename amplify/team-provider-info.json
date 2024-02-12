@@ -1,4 +1,27 @@
 {
+  "test": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-upstreamreact-test-00119-authRole",
+      "UnauthRoleArn": "arn:aws:iam::975050233774:role/amplify-upstreamreact-test-00119-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::975050233774:role/amplify-upstreamreact-test-00119-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-upstreamreact-test-00119-deployment",
+      "UnauthRoleName": "amplify-upstreamreact-test-00119-unauthRole",
+      "StackName": "amplify-upstreamreact-test-00119",
+      "StackId": "arn:aws:cloudformation:us-east-2:975050233774:stack/amplify-upstreamreact-test-00119/d9b09010-c939-11ee-b3a1-02a46b8489ab",
+      "AmplifyAppId": "dh76gvqlakwc3"
+    },
+    "categories": {
+      "auth": {
+        "upstreamreact": {
+          "userPoolId": "us-east-2_PSc0mVTYC",
+          "userPoolName": "Upstream-Auth",
+          "webClientId": "5ibvndafnn5addkmlfnqdqf1m7",
+          "nativeClientId": "5ibvndafnn5addkmlfnqdqf1m7"
+        }
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-seniorproject-dev-185640-authRole",
@@ -13,7 +36,20 @@
     },
     "categories": {
       "auth": {
-        "seniorproject5ab7497c": {}
+        "seniorproject7fbae277": {},
+        "seniorprojectb585bee1": {
+          "userPoolId": "us-east-1_L3Yq42Odu",
+          "userPoolName": "Upstream-Auth-Virginia",
+          "webClientId": "1fv9ho1101o1vjv6rr8emas58s",
+          "nativeClientId": "1fv9ho1101o1vjv6rr8emas58s",
+          "identityPoolId": "us-east-1:2a0c51a2-851f-4135-9980-fb38b8ffeb2c",
+          "identityPoolName": "Upstream-Authentication-Virginia2",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::975050233774:role/amplify-amplify67b96f5246744-staging-21338-authRole",
+          "authRoleName": "amplify-amplify67b96f5246744-staging-21338-authRole",
+          "unauthRoleArn": "arn:aws:iam::975050233774:role/amplify-amplify67b96f5246744-staging-21338-unauthRole",
+          "unauthRoleName": "amplify-amplify67b96f5246744-staging-21338-unauthRole"
+        }
       }
     }
   }

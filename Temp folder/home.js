@@ -9,8 +9,11 @@ const Home = ({signOut, user}) => {
   return (
     <div id="mainpage">
       <div className="container">
-          <Heading level={1}> Hello {user.username}</Heading>
+      <Heading level={4}> Upstream </Heading>
           <button onClick={signOut}>Sign Out</button>
+          <p>
+            Hello {user.username}
+          </p>
       </div>
       <table>
         <caption> All Games Played</caption>
