@@ -1,6 +1,6 @@
 export const awsExports = {
-    "REGION": "us-east-1",
-    "USER_POOL_ID": "us-east-1_iDjdVVOff",
-    "USER_POOL_CLIENT_ID": "6k79o93ocgg1akjok127trcjf6"
+    "aws_project_region": "us-east-1",
+    "aws_user_pools_id": "us-east-1_ypmJBbwY8",
+    "aws_user_pools_web_client_id": "5brdt0oo3s1gdb2im9kr9s4ut2"
 }
 export default awsExports
