@@ -15,24 +15,27 @@ import RegisterPage from './Components/Auth/RegisterPage';
 import ValidatePage from './Components/Auth/ValidatePage';
 import Dashboard from './Components/Home/Dashboard';
 import ResetPass from './Components/Auth/ResetPass';
+import PrivateRoutes from './Components/Auth/PrivateRoute';
 
 Amplify.configure(awsExports);
 
 function App() {
   return (
-        <div>
-        <SiteNav/>
-        <Routes>
-          <Route path='*' element={<HomePage />} />
-          <Route path='/' exact={true} element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/validate' element={<ValidatePage />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/resetpass' element={<ResetPass />} />
-        </Routes>
-        <SiteFooter />
-      </div>
+    <div>
+      <SiteNav />
+      <Routes>
+        <Route path='*' element={<HomePage />} />
+        <Route path='/' exact={true} element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/validate' element={<ValidatePage />} />
+        <Route path='/resetpass' element={<ResetPass />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path='/dashboard' element={<Dashboard />} exact/>
+        </Route>
+      </Routes>
+      <SiteFooter />
+    </div>
   );
 }
 
