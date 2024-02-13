@@ -13,13 +13,26 @@
     },
     "categories": {
       "auth": {
-        "upstreamreact62a6ac47": {
-          "userPoolId": "us-east-2_68YQ1VWCT",
-          "userPoolName": "UpstreamSES_Auth",
-          "webClientId": "236ai2jcpe00j9kknqpllq331l",
-          "nativeClientId": "236ai2jcpe00j9kknqpllq331l",
-          "identityPoolId": "us-east-2:d81f10c9-c890-4683-b0aa-2759a544e508",
-          "identityPoolName": "UpstreamSES_Auth",
+        "upstreamreactcaffc8f3": {
+          "userPoolId": "us-east-2_Dz5gVqBcz",
+          "userPoolName": "UpstreamSESMsg",
+          "webClientId": "5opmdsadr93nms8coljmcqh16v",
+          "nativeClientId": "5opmdsadr93nms8coljmcqh16v",
+          "identityPoolId": "us-east-2:de632c2e-b933-4fdd-a857-eccca117b94c",
+          "identityPoolName": "UpstreamSESMsg",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::975050233774:role/service-role/UpstreamVirginiaCog",
+          "authRoleName": "UpstreamVirginiaCog",
+          "unauthRoleArn": "arn:aws:iam::975050233774:role/service-role/UpstreamViriginiaCog_Guest",
+          "unauthRoleName": "UpstreamViriginiaCog_Guest"
+        },
+        "upstreamreact72fbb936": {
+          "userPoolId": "us-east-2_vsDpFEu4N",
+          "userPoolName": "UpstreamCogMsg",
+          "webClientId": "7gfgo1tth6ohhqhvrjt236i2q4",
+          "nativeClientId": "7gfgo1tth6ohhqhvrjt236i2q4",
+          "identityPoolId": "us-east-2:9ab06cf5-a999-4036-96c5-61d0a91eb5d0",
+          "identityPoolName": "UpstreamCogMsg",
           "allowUnauthenticatedIdentities": true,
           "authRoleArn": "arn:aws:iam::975050233774:role/service-role/UpstreamVirginiaCog",
           "authRoleName": "UpstreamVirginiaCog",
