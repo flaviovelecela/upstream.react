@@ -30,6 +30,7 @@ async function handleSignUpConfirmation({ email, confirmationCode }, navigate) {
             confirmationCode
         });
         if (isSignUpComplete) {
+            localStorage.setItem('isLoggedIn', 'true');
             navigate('/dashboard')
         }
     } catch (error) {
