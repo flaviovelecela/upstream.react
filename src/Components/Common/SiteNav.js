@@ -39,9 +39,17 @@ function SiteNav() {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ms-md-auto">
                                 <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="/login">Login</Nav.Link>
-                                <Nav.Link href="/Register">Register</Nav.Link>
-                                <div style ={{ cursor: 'pointer' }} className='nav-link' onClick={handleSignOut}>Sign Out</div>
+                                <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
+                                {localStorage.getItem('isLoggedIn') === 'true' ? (
+                                    <div style={{cursor: 'pointer'}} className='nav-link' onClick={handleSignOut}>
+                                        Sign Out
+                                    </div>
+                                ):(
+                                    <>
+                                        <Nav.Link href="/login">Login</Nav.Link>
+                                        <Nav.Link href="/Register">Register</Nav.Link>
+                                    </>
+                                )}
                             </Nav>
                         </Navbar.Collapse>
                 </Container>
