@@ -1,6 +1,6 @@
 {
   "auth": {
-    "upstreamreact": {
+    "upstreamreact62a6ac47": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -9,35 +9,91 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_upstreamreact_nativeClientId": {
+    "AMPLIFY_auth_upstreamreact62a6ac47_allowUnauthenticatedIdentities": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "upstreamreact"
+          "resourceName": "upstreamreact62a6ac47"
         }
       ]
     },
-    "AMPLIFY_auth_upstreamreact_userPoolId": {
+    "AMPLIFY_auth_upstreamreact62a6ac47_authRoleArn": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "upstreamreact"
+          "resourceName": "upstreamreact62a6ac47"
         }
       ]
     },
-    "AMPLIFY_auth_upstreamreact_userPoolName": {
+    "AMPLIFY_auth_upstreamreact62a6ac47_authRoleName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "upstreamreact"
+          "resourceName": "upstreamreact62a6ac47"
         }
       ]
     },
-    "AMPLIFY_auth_upstreamreact_webClientId": {
+    "AMPLIFY_auth_upstreamreact62a6ac47_identityPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "upstreamreact"
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_identityPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_unauthRoleArn": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_unauthRoleName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
+        }
+      ]
+    },
+    "AMPLIFY_auth_upstreamreact62a6ac47_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "upstreamreact62a6ac47"
         }
       ]
     }

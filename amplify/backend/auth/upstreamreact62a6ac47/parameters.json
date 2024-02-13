@@ -1,6 +1,6 @@
 {
-  "authSelections": "userPoolOnly",
-  "resourceName": "upstreamreact",
+  "authSelections": "identityPoolAndUserPool",
+  "resourceName": "upstreamreact62a6ac47",
   "serviceType": "imported",
   "region": "us-east-2",
   "usernameAttributes": [

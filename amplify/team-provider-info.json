@@ -1,4 +1,34 @@
 {
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyc7866ffdec2b4-staging-160435-authRole",
+      "UnauthRoleArn": "arn:aws:iam::975050233774:role/amplify-amplifyc7866ffdec2b4-staging-160435-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::975050233774:role/amplify-amplifyc7866ffdec2b4-staging-160435-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-amplifyc7866ffdec2b4-staging-160435-deployment",
+      "UnauthRoleName": "amplify-amplifyc7866ffdec2b4-staging-160435-unauthRole",
+      "StackName": "amplify-amplifyc7866ffdec2b4-staging-160435",
+      "StackId": "arn:aws:cloudformation:us-east-2:975050233774:stack/amplify-amplifyc7866ffdec2b4-staging-160435/41dd3070-c440-11ee-96cd-063bd7523d01",
+      "AmplifyAppId": "dh76gvqlakwc3"
+    },
+    "categories": {
+      "auth": {
+        "upstreamreact62a6ac47": {
+          "userPoolId": "us-east-2_68YQ1VWCT",
+          "userPoolName": "UpstreamSES_Auth",
+          "webClientId": "236ai2jcpe00j9kknqpllq331l",
+          "nativeClientId": "236ai2jcpe00j9kknqpllq331l",
+          "identityPoolId": "us-east-2:d81f10c9-c890-4683-b0aa-2759a544e508",
+          "identityPoolName": "UpstreamSES_Auth",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::975050233774:role/service-role/UpstreamVirginiaCog",
+          "authRoleName": "UpstreamVirginiaCog",
+          "unauthRoleArn": "arn:aws:iam::975050233774:role/service-role/UpstreamViriginiaCog_Guest",
+          "unauthRoleName": "UpstreamViriginiaCog_Guest"
+        }
+      }
+    }
+  },
   "test": {
     "awscloudformation": {
       "AuthRoleName": "amplify-upstreamreact-test-00119-authRole",
