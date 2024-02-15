@@ -89,7 +89,7 @@ function RegisterPage() {
                             <Form.Label>SteamID</Form.Label>
                             <Form.Control type="text" placeholder="Enter Your SteamID" value={formState.SteamID} onChange={setFormValue('SteamID')} />
                             <Form.Text className='text-muted'>
-                                <a href="https://www.ubisoft.com/en-gb/help/account/article/finding-your-steam-id/000060565#:~:text=In%20the%20Steam%20desktop%20application,right%20corner%20of%20the%20screen.&text=Select%20''Account%20details''.&text=Your%20Steam%20ID%20can%20be%20found%20below%20your%20Steam%20username." target="_blank">Please visit this link in order to see how to locate your SteamID</a>
+                                <a href="https://store.steampowered.com/account/" target="_blank">Please visit this link to obtain your SteamID</a>
                             </Form.Text>
                         </Form.Group>
 
