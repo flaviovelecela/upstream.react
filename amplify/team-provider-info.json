@@ -61,7 +61,8 @@
           "userPoolName": "Upstream-Auth",
           "webClientId": "5ibvndafnn5addkmlfnqdqf1m7",
           "nativeClientId": "5ibvndafnn5addkmlfnqdqf1m7"
-        }
+        },
+        "upstreamreact72fbb936": {}
       }
     }
   },

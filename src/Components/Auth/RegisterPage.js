@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { signUp, confirmSignUp } from 'aws-amplify/auth';
 import { Link } from "react-router-dom";
+import Tooltip from "../Tooltips/Tooltip";
 
 async function handleSignUp({ SteamID, password, email }, setFormState) {
     try {
@@ -86,9 +87,9 @@ function RegisterPage() {
 
                         <Form.Group className="mb-3" controlId="SteamID">
                             <Form.Label>SteamID</Form.Label>
-                            <Form.Control type="text" placeholder="Enter SteamID" value={formState.SteamID} onChange={setFormValue('SteamID')} />
+                            <Form.Control type="text" placeholder="Enter Your SteamID" value={formState.SteamID} onChange={setFormValue('SteamID')} />
                             <Form.Text className='text-muted'>
-                                Please visit this link in order to see how to locate your SteamID
+                                <a href="https://www.ubisoft.com/en-gb/help/account/article/finding-your-steam-id/000060565#:~:text=In%20the%20Steam%20desktop%20application,right%20corner%20of%20the%20screen.&text=Select%20''Account%20details''.&text=Your%20Steam%20ID%20can%20be%20found%20below%20your%20Steam%20username." target="_blank">Please visit this link in order to see how to locate your SteamID</a>
                             </Form.Text>
                         </Form.Group>
 
@@ -101,7 +102,7 @@ function RegisterPage() {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formPassword">
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label><div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>Password <Tooltip /></div></Form.Label>
                             <Form.Control type="password" minLength="8" placeholder="Enter Password" value={formState.password} onChange={setFormValue('password')} />
                         </Form.Group>
 

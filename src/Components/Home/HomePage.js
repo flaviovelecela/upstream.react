@@ -6,16 +6,6 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
-import { signOut } from 'aws-amplify/auth';
-
-async function handleSignOut() {
-    try {
-      await signOut({ global: true });
-    } catch (error) {
-      console.log('error signing out: ', error);
-    }
-  }
-
 function HomePage() {
     return(
         <Container>
