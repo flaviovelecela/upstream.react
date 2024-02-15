@@ -87,7 +87,7 @@ function RegisterPage() {
 
                         <Form.Group className="mb-3" controlId="SteamID">
                             <Form.Label>SteamID</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Your SteamID" value={formState.SteamID} onChange={setFormValue('SteamID')} />
+                            <Form.Control type="text" placeholder="Enter Your SteamID" value={formState.SteamID} onChange={setFormValue('SteamID')} required/>
                             <Form.Text className='text-muted'>
                                 <a href="https://store.steampowered.com/account/" target="_blank">Please visit this link to obtain your SteamID</a>
                             </Form.Text>
@@ -95,7 +95,7 @@ function RegisterPage() {
 
                         <Form.Group className="mb-3" controlId="email">
                             <Form.Label>Email Address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter Your Email" value={formState.email} onChange={setFormValue('email')} />
+                            <Form.Control type="email" placeholder="Enter Your Email" value={formState.email} onChange={setFormValue('email')} required/>
                             <Form.Text className='text-muted'>
                                 We'll never share your email!
                             </Form.Text>
@@ -103,12 +103,12 @@ function RegisterPage() {
 
                         <Form.Group className="mb-3" controlId="formPassword">
                             <Form.Label><div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>Password <Tooltip /></div></Form.Label>
-                            <Form.Control type="password" minLength="8" placeholder="Enter Password" value={formState.password} onChange={setFormValue('password')} />
+                            <Form.Control type="password" minLength="8" placeholder="Enter Password" value={formState.password} onChange={setFormValue('password')} required/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formConfirm">
                             <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="password" minLength="8" placeholder="Confirm Password" value={formState.confirmPassword} onChange={setFormValue('confirmPassword')} />
+                            <Form.Control type="password" minLength="8" placeholder="Confirm Password" value={formState.confirmPassword} onChange={setFormValue('confirmPassword')} required/>
                         </Form.Group>
 
                         {
