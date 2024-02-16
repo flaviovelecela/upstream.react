@@ -23,9 +23,9 @@ function Dashboard () {
             <th>Status</th>
           </tr>
 
-          <tr className="game-row">
+          <tr className="game-row" data-status="currently-playing">
             <td className="game-number">1</td>
-            <td><img className="gamepic" img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Hades_cover_art.jpg/220px-Hades_cover_art.jpg"
+            <td><img className="gamepic" src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Hades_cover_art.jpg/220px-Hades_cover_art.jpg"
               alt="Hades"></img></td>
             <td>Hades</td>
             <td>6%</td>
