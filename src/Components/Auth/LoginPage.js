@@ -16,7 +16,7 @@ function LoginPage(props) {
 
     const handleSignIn = async () => {
         try {
-            const user = await signIn({username: email, password});
+            const user = await signIn({ username: email, password });
             console.log(user);
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/dashboard');
@@ -40,33 +40,38 @@ function LoginPage(props) {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            value={email}
-                            onChange={handleEmailChange}
+                                type="email"
+                                placeholder="Enter email"
+                                value={email}
+                                onChange={handleEmailChange}
                             />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control 
-                            type="password" 
-                            placeholder="Password"
-                            value={password}
-                            onChange={handlePasswordChange}/>
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={handlePasswordChange} />
+
+                            <Form.Text className='text-muted'>
+                                <Link to='/ResetPass'>
+                                        Click here to reset your password!
+                                </Link>
+                            </Form.Text>
                         </Form.Group>
 
-                        <Button variant="primary" type="button"
-                            onClick={handleSignIn}>Login &gt;&gt;</Button>
-                        &nbsp;&nbsp;                      
-                        <Link to ='/ResetPass'>
-                            <Button variant="secondary" type="button">Reset Password &gt;&gt;</Button>
-                        </Link>
-                        &nbsp;&nbsp;
+
                         <Link
                             to='/'>
-                            <Button href="/ResetPass" variant="secondary" type="button">Cancel &gt;&gt;</Button>
+                            <Button variant="primary" type="button">Cancel</Button>
                         </Link>
+                        &nbsp;&nbsp;
+
+                        &nbsp;&nbsp;
+                        <Button variant="primary" type="button"
+                            onClick={handleSignIn}>Login</Button>
                     </Form>
                 </Col>
             </Row>

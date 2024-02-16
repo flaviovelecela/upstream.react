@@ -2,10 +2,10 @@ import './Tooltip.css';
 import React, { useState } from "react";
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
-function Tooltip() {
+function Tooltip_SteamID_Alert() {
     const [isHovering, setIsHovering] = useState(false);
 
-    const listItems = ['The password requirements are as follows:', 'At least 8 characters', '1 Uppercase letter', '1 Lowercase Letter', '1 Number', '1 Symbol'];
+    const listItems = ['Please note that you will not be able to change your SteamID after registration'];
 
     return (
         <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -41,4 +41,4 @@ function Tooltip() {
     );
 }
 
-export default Tooltip;
+export default Tooltip_SteamID_Alert;
