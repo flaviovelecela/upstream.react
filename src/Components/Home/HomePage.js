@@ -23,12 +23,12 @@ function HomePage() {
                     </p>
                     <Link
                         to={{ pathname: '/Login' }}>
-                        <Button variant="outline-primary">Login &gt;&gt;</Button>
+                        <Button variant="outline-primary">Login</Button>
                     </Link>
                     &nbsp;&nbsp;
                     <Link
                         to={{ pathname: '/Register' }}>
-                        <Button variant="outline-primary">Register &gt;&gt;</Button>
+                        <Button variant="outline-primary">Register</Button>
                     </Link>
                 </Col>
             </Row>
