@@ -16,6 +16,7 @@ import ValidatePage from './Components/Auth/ValidatePage';
 import Dashboard from './Components/Home/Dashboard';
 import ResetPass from './Components/Auth/ResetPass';
 import PrivateRoutes from './Components/Auth/PrivateRoute';
+import SteamGamesList from './Components/Home/SteamGamesList';
 
 Amplify.configure(awsExports);
 
@@ -30,9 +31,12 @@ function App() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/validate' element={<ValidatePage />} />
         <Route path='/resetpass' element={<ResetPass />} />
+        <Route path='/steamgames' element={<SteamGamesList />}/>
+
         <Route element={<PrivateRoutes />}>
           <Route path='/dashboard' element={<Dashboard />} exact/>
         </Route>
+
       </Routes>
       <SiteFooter />
     </div>
