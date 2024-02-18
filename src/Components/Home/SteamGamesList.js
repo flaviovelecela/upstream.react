@@ -8,7 +8,7 @@ function SteamGamesList() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json&include_appinfo=1`)
+        const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json&include_appinfo=1`)
         ;
         const data = await response.json();
         setGames(data.response.games);
@@ -25,7 +25,7 @@ function SteamGamesList() {
       <h1>Owned Games</h1>
       <ul>
         {games.map(game => (
-          <li key={game.appid}><img src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`} alt='game.name' /> {game.name} | {game.appid} |</li>
+          <li key={game.appid}><img src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`} alt='game.name' /> {game.name} | {game.appid} |</li>
         ))}
       </ul>
     </div>
