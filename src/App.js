@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
 import '@aws-amplify/ui-react/styles.css';
+import { AuthProvider } from './Components/Auth/useAuth';
 
 import SiteNav from './Components/Common/SiteNav';
 import SiteFooter from './Components/Common/SiteFooter';
@@ -23,22 +24,24 @@ Amplify.configure(awsExports);
 function App() {
   return (
     <div>
-      <SiteNav />
-      <Routes>
-        <Route path='*' element={<HomePage />} />
-        <Route path='/' exact={true} element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/validate' element={<ValidatePage />} />
-        <Route path='/resetpass' element={<ResetPass />} />
-        <Route path='/steamgames' element={<SteamGamesList />}/>
+      <AuthProvider>
+        <SiteNav />
+        <Routes>
+          <Route path='*' element={<HomePage />} />
+          <Route path='/' exact={true} element={<HomePage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/validate' element={<ValidatePage />} />
+          <Route path='/resetpass' element={<ResetPass />} />
 
-        <Route element={<PrivateRoutes />}>
-          <Route path='/dashboard' element={<Dashboard />} exact/>
-        </Route>
+          <Route element={<PrivateRoutes />}>
+            <Route path='/dashboard' element={<Dashboard />} exact />
+            <Route path='/steamgames' element={<SteamGamesList />} exact />
+          </Route>
 
-      </Routes>
-      <SiteFooter />
+        </Routes>
+        <SiteFooter />
+      </AuthProvider>
     </div>
   );
 }

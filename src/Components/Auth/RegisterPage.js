@@ -5,43 +5,48 @@ import { signUp, confirmSignUp } from 'aws-amplify/auth';
 import { Link } from "react-router-dom";
 import Tooltip_PassReq from "../Tooltips/Tooltip_PassReq";
 import Tooltip_SteamID_Alert from "../Tooltips/Tooltip_SteamID_Alert";
-
-async function handleSignUp({ SteamID, password, email }, setFormState) {
-    try {
-        const { isSignUpComplete, userId, nextStep } = await signUp({
-            username: email,
-            password,
-            options: {
-                userAttributes: {
-                    'custom:SteamID': SteamID
-                },
-            }
-        });
-
-        console.log(userId);
-        setFormState(prevState => ({ ...prevState, isSignUpComplete: true }));
-    } catch (error) {
-        console.log('error signing up:', error);
-    }
-}
-
-async function handleSignUpConfirmation({ email, confirmationCode }, navigate) {
-    try {
-        const { isSignUpComplete, nextStep } = await confirmSignUp({
-            username: email,
-            confirmationCode
-        });
-        if (isSignUpComplete) {
-            localStorage.setItem('isLoggedIn', 'true');
-            navigate('/dashboard')
-        }
-    } catch (error) {
-        console.log('error confirming sign up', error);
-    }
-}
+import { useAuth } from "./useAuth";
 
 function RegisterPage() {
     const navigate = useNavigate();
+
+    const { setIsLoggedIn } = useAuth();
+
+    async function handleSignUp({ SteamID, password, email }, setFormState) {
+        console.log('Attempting to sign up:', email); // Debugging
+        try {
+            const { userId } = await signUp({
+                username: email,
+                password,
+                options: {
+                    userAttributes: {
+                        'custom:SteamID': SteamID,
+                    },
+                },
+            });
+    
+            console.log('Sign up successful, user ID:', userId); // Debugging
+            setFormState(prevState => ({ ...prevState, isSignUpComplete: true }));
+        } catch (error) {
+            console.error('Error signing up:', error);
+        }
+    }
+
+    async function handleSignUpConfirmation({ email, confirmationCode }, navigate, setIsLoggedIn) {
+        console.log('Confirming sign up for:', email);
+        try {
+            await confirmSignUp({
+                username: email,
+                confirmationCode,
+            });
+            console.log('Sign up confirmation successful');
+            setIsLoggedIn(true);
+            console.log("(Register) User is logged in:", true)
+            navigate('/login');
+        } catch (error) {
+            console.error('Error confirming sign up:', error);
+        }
+    }
 
     const [formState, setFormState] = useState({
         SteamID: '',
@@ -73,7 +78,7 @@ function RegisterPage() {
             await handleSignUpConfirmation({
                 email: formState.email,
                 confirmationCode: formState.confirmationCode
-            }, navigate);
+            }, navigate, setIsLoggedIn);
         }
     };
 

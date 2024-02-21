@@ -4,25 +4,26 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
-import { signIn } from "aws-amplify/auth";
+import { signIn} from "aws-amplify/auth";
+import { useAuth } from "./useAuth";
 
 function LoginPage(props) {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { setIsLoggedIn } = useAuth();
 
-    const handleSignIn = async () => {
+    const handleSignIn = async (e) => {
+        e.preventDefault();
         try {
-            const user = await signIn({ username: email, password });
-            console.log(user);
-            localStorage.setItem('isLoggedIn', 'true');
+            await signIn({ username: email, password });
+            setIsLoggedIn(true);
             navigate('/dashboard');
         } catch (error) {
-            console.log('error signing in', error)
-            alert(error)
+            console.log('error signing in', error);
+            alert(error.message || error.toString());
         }
     };
 

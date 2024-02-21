@@ -1,32 +1,38 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { signOut } from 'aws-amplify/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { signOut, } from 'aws-amplify/auth';
+import { Hub } from 'aws-amplify/utils';
+import { useAuth } from '../Auth/useAuth';
 
-async function handleSignOut() {
-    try {
-        await signOut({ global: true });
-        console.log('YUESS');
-    } catch (error) {
-        console.log('error signing out: ', error);
-    }
-}
-
-function SiteNav() {
-
+const SiteNav = () => {
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
     const navigate = useNavigate();
 
-    const handleSignOut = async (event) => {
-        event.preventDefault();
+    useEffect(() => {
+        const hubListener = Hub.listen('auth', (data) => {
+            switch (data.payload.event) {
+                case 'signIn':
+                    setIsLoggedIn(true);
+                    break;
+                case 'signOut':
+                    setIsLoggedIn(false);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        return () => hubListener();
+    }, [setIsLoggedIn]);
+
+    const handleSignOut = async () => {
         try {
-            await signOut({ global: true });
-            console.log('Successfully signed out');
-            alert('Successfully Signed Out')
-            localStorage.removeItem('isLoggedIn');
-            navigate('/HomePage');
+            await signOut();
+            setIsLoggedIn(false);
+            navigate('/home');
         } catch (error) {
-            console.log('error signing out: ', error);
+            console.error('Error signing out: ', error);
         }
     };
 
@@ -34,29 +40,29 @@ function SiteNav() {
         <header>
             <Navbar bg="dark" expand="lg" variant="dark">
                 <Container>
-                    <Navbar.Brand>Upstream</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/">Upstream</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ms-md-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-                            {localStorage.getItem('isLoggedIn') === 'true' ? (
-                                <div style={{ cursor: 'pointer' }} className='nav-link' onClick={handleSignOut}>
-                                    Sign Out
-                                </div>
+                        <Nav className="ms-auto">
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                                    <Nav.Link as={Link} to="/steamgames">testAPI</Nav.Link>
+                                    <Nav.Link onClick={handleSignOut}>Sign Out</Nav.Link>
+                                </>
                             ) : (
                                 <>
-                                    <Nav.Link href="/login">Login</Nav.Link>
-                                    <Nav.Link href="/Register">Register</Nav.Link>
+                                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                                    <Nav.Link as={Link} to="/register">Register</Nav.Link>
                                 </>
                             )}
-                            <Nav.Link href='/steamgames'>testAPI</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
         </header>
-    )
-}
+    );
+};
 
 export default SiteNav;

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 function SteamGamesList() {
   const [games, setGames] = useState([]);
-  const steamId = '76561198311677632';
   const apiKey = '94A07FD5B1267700D27D6D2B3CF9583C';
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchGames = async (steamId) => {
       try {
-        const response = await fetch(`/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json&include_appinfo=1`)
-        ;
+        const response = await fetch(`/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json&include_appinfo=1`);
         const data = await response.json();
         setGames(data.response.games);
       } catch (error) {
@@ -17,6 +16,20 @@ function SteamGamesList() {
       }
     };
 
+    const fetchSteamId = async () => {
+      try {
+        const attributes = await fetchUserAttributes();
+        console.log('User attributes:', attributes)
+        const steamId = attributes['custom:SteamID']; // Access the SteamID directly
+        if (steamId) {
+          fetchGames(steamId);
+        }
+      } catch (error) {
+        console.error('Error fetching SteamID: ', error);
+      }
+    };
+
+    fetchSteamId();
     fetchGames();
   }, []);
 
