@@ -63,3 +63,9 @@ th {
     max-width: 200px;
     padding: 5px;
 }
+
+.small-button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin: 0;
+  }

@@ -45,35 +45,24 @@ function SteamGamesList() {
 
   const fetchAchievements = async (steamId, appId) => {
     try {
-      console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`); //DEBUG
+      console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`);
       const response = await fetch(`/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${apiKey}&steamid=${steamId}`);
-      console.log(`Response status: ${response.status}`); //DEBUG
       const data = await response.json();
-      console.log('Fetched data:', data); //DEBUG
-      if (response.ok) {
+      if (response.ok && data.playerstats && data.playerstats.success) {
         setAchievements(prevAchievements => ({
           ...prevAchievements,
           [appId]: data.playerstats.achievements
         }));
+      } else if (data.playerstats && data.playerstats.error) {
+        setAchievements(prevAchievements => ({
+          ...prevAchievements,
+          [appId]: []
+        }));
       } else {
-        console.error(`HTTP error! Status: ${response.status}`); //DEBUG
-        const errorResponse = await response.text(); //DEBUG
-        console.error('Error response body:', errorResponse); //DEBUG
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
-      alert("There are no achivements for this game")
       console.error('Error fetching achievements:', error);
-    }
-  };
-
-  const showAchievements = (appId) => {
-    const gameAchievements = achievements[appId];
-    if (gameAchievements && gameAchievements.length > 0) {
-      const achievementList = gameAchievements.map(ach => `${ach.apiname} - ${ach.achieved ? 'Achieved' : 'Not achieved'}`).join('\n');
-      alert(`Achievements for game ${appId}:\n${achievementList}`);
-    } else {
-      alert('No achievements loaded for this game.');
     }
   };
 
@@ -142,10 +131,14 @@ function SteamGamesList() {
                 <img className='gamepic' src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`} alt={game.name} />
               </td>
               <td>{game.name}</td>
-              <td>  {achievements[game.appid]
-                ? <button onClick={() => showAchievements(game.appid)}>Show Achievements</button>
-                : <button onClick={() => fetchAchievements(userSteamId, game.appid)}>Load Achievements</button>
-              }</td>
+              <td>
+                {achievements[game.appid] === undefined
+                  ? <button onClick={() => fetchAchievements(userSteamId, game.appid)} className='small-button'>Show %</button>
+                  : achievements[game.appid].length === 0
+                    ? 'N/A'
+                    : `${(achievements[game.appid].filter(a => a.achieved).length / achievements[game.appid].length * 100).toFixed(0)}%` //Change toFixed to whatever decimal place you guys want
+                }
+              </td>
               <td>{game.rating || 'N/A'}</td>
               <td>{game.statusText || 'N/A'}</td>
             </tr>
