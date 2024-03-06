@@ -48,7 +48,7 @@ const SiteNav = () => {
                             {isLoggedIn ? (
                                 <>
                                     <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                                    <Nav.Link as={Link} to="/steamgames">testAPI</Nav.Link>
+                                    <Nav.Link as={Link} to="/forumpage">Forum Page</Nav.Link>
                                     <Nav.Link onClick={handleSignOut}>Sign Out</Nav.Link>
                                 </>
                             ) : (

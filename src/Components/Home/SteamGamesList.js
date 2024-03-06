@@ -96,6 +96,17 @@ function SteamGamesList() {
 
   const selectedGames = filteredGames.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
+  const handleStatusChange = async (appid, newStatus) => {
+    // Here you could update the state or send the new status to your backend
+    const updatedGames = games.map((game) => {
+      if (game.appid === appid) {
+        return { ...game, statusText: newStatus };
+      }
+      return game;
+    });
+    setGames(updatedGames);
+  };
+
   return (
     <div id="mainpage">
       <div className='container'>
@@ -139,8 +150,41 @@ function SteamGamesList() {
                     : `${(achievements[game.appid].filter(a => a.achieved).length / achievements[game.appid].length * 100).toFixed(0)}%` //Change toFixed to whatever decimal place you guys want
                 }
               </td>
-              <td>{game.rating || 'N/A'}</td>
-              <td>{game.statusText || 'N/A'}</td>
+              <td>
+                <select
+                  value={game.statusText || 'N/A'}
+                  className='small-dropdown'
+                  style={{ fontSize: 13 }}
+                >
+                  <option value="N/A">N/A</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </td>
+              <td>
+                <select
+                  value={game.statusText || 'N/A'}
+                  onChange={(e) => handleStatusChange(game.appid, e.target.value)}
+                  className='small-dropdown'
+                  style={{ fontSize: 13 }}
+                >
+                  <option value="N/A">N/A</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Up Next">Up Next</option>
+                  <option value="Currently Playing">Currently Playing</option>
+                  <option value="On Hold">On Hold</option>
+                  <option value="Dropped">Dropped</option>
+                  <option value="Quit">Quit</option>
+                </select>
+              </td>
             </tr>
           ))}
         </tbody>
