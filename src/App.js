@@ -14,11 +14,12 @@ import HomePage from './Components/Home/HomePage';
 import LoginPage from './Components/Auth/LoginPage'
 import RegisterPage from './Components/Auth/RegisterPage';
 import ValidatePage from './Components/Auth/ValidatePage';
-import Dashboard from './Components/Home/Dashboard';
 import ResetPass from './Components/Auth/ResetPass';
 import PrivateRoutes from './Components/Auth/PrivateRoute';
 import SteamGamesList from './Components/Home/SteamGamesList';
 import ForumPage from './Components/Discussions/HomePage';
+import Friends from './Components/Home/Friends';
+import GameLists from './Components/Home/List';
 
 Amplify.configure(awsExports);
 
@@ -38,6 +39,8 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path='/dashboard' element={<SteamGamesList />} exact />
             <Route path='/forumpage' element = {<ForumPage />} exact />
+            <Route path='/friends' element = {<Friends />} exact />
+            <Route path='/lists' element = {<GameLists />} exact/>
           </Route>
 
         </Routes>
