@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .list-form, .game-form {
+    margin-bottom: 20px;
+  }
+  
+  .game-list {
+    border: 2px solid #000;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 80%;
+  }
+  
+  .game-item {
+    border: 1px solid #000;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+
+  .game-description {
+    height: 30px;
+    padding: 8px;
+    box-sizing: border-box;
+    resize: none;
+  }
+
+  
