@@ -11,17 +11,21 @@ function SteamGamesList() {
   const [totalPages, setTotalPages] = useState(0);
   const [achievements, setAchievements] = useState({});
   const [userSteamId, setUserSteamId] = useState(null);
-  const apiKey = '94A07FD5B1267700D27D6D2B3CF9583C';
 
   //FIRST useEffect
 
   useEffect(() => {
     const fetchGames = async (steamId) => {
       try {
-        const response = await fetch(`/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamId}&format=json&include_appinfo=1`);
+        const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
         const data = await response.json();
-        setGames(data.response.games);
-        setTotalPages(Math.ceil(data.response.games.length / ITEMS_PER_PAGE));
+        console.log(data)
+        if (data && data.response && data.response.games) {
+          setGames(data.response.games);
+          setTotalPages(Math.ceil(data.response.games.length / ITEMS_PER_PAGE));
+        } else {
+          console.log('Games data is not in the expected format:', data);
+        }
       } catch (error) {
         console.error('Error fetching data: ', error);
       }
@@ -46,20 +50,19 @@ function SteamGamesList() {
   const fetchAchievements = async (steamId, appId) => {
     try {
       console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`);
-      const response = await fetch(`/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${apiKey}&steamid=${steamId}`);
+      const response = await fetch(`http://localhost:8080/getAchievements?appId=${appId}&userId=${steamId}`);
       const data = await response.json();
-      if (response.ok && data.playerstats && data.playerstats.success) {
+      if (response.ok) {
         setAchievements(prevAchievements => ({
           ...prevAchievements,
           [appId]: data.playerstats.achievements
         }));
-      } else if (data.playerstats && data.playerstats.error) {
+      } else {
+        console.error(`Error fetching achievements: ${data.error}`);
         setAchievements(prevAchievements => ({
           ...prevAchievements,
           [appId]: []
         }));
-      } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       console.error('Error fetching achievements:', error);
