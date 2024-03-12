@@ -19,7 +19,13 @@ function SteamGamesList() {
     const fetchGames = async (steamId) => {
       try {
         //const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
-        const response = await fetch(`${ngrokUrl}/getGames?userId=${steamId}`);
+        const response = await fetch(`${ngrokUrl}/getGames?userId=${steamId}`, {
+          method: 'GET',
+          headers: {
+            'ngrok-skip-browser-warning': 'true',
+            Accept:'application/json'
+          },
+        });
         const data = await response.json();
         console.log(data)
         if (data && data.response && data.response.games) {
