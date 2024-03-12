@@ -11,13 +11,15 @@ function SteamGamesList() {
   const [totalPages, setTotalPages] = useState(0);
   const [achievements, setAchievements] = useState({});
   const [userSteamId, setUserSteamId] = useState(null);
+  const ngrokUrl = 'https://c7e4-2603-9000-9600-4501-00-1006.ngrok-free.app';
 
   //FIRST useEffect
 
   useEffect(() => {
     const fetchGames = async (steamId) => {
       try {
-        const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
+        //const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
+        const response = await fetch(`${ngrokUrl}/getGames?userId=${steamId}`);
         const data = await response.json();
         console.log(data)
         if (data && data.response && data.response.games) {
@@ -50,7 +52,8 @@ function SteamGamesList() {
   const fetchAchievements = async (steamId, appId) => {
     try {
       console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`);
-      const response = await fetch(`http://localhost:8080/getAchievements?appId=${appId}&userId=${steamId}`);
+      //const response = await fetch(`http://localhost:8080/getAchievements?appId=${appId}&userId=${steamId}`);
+      const response = await fetch(`${ngrokUrl}/getAchievements?appId=${appId}&userId=${steamId}`);
       const data = await response.json();
       if (response.ok) {
         setAchievements(prevAchievements => ({
