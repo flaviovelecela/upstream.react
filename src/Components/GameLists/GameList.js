@@ -4,7 +4,7 @@ import './GameList.css'
 function GameLists() {
   const [lists, setLists] = useState([]);
   const [newListName, setNewListName] = useState('');
-  const [gameToAdd, setGameToAdd] = useState({ title: '', category: '', description: '' });
+  const [gameToAdd, setGameToAdd] = useState({ title: '', Notes: '', description: '' });
   const [selectedListIndex, setSelectedListIndex] = useState(null);
 
   const createList = () => {
@@ -23,7 +23,7 @@ function GameLists() {
       const updatedLists = [...lists];
       updatedLists[selectedListIndex].games.push({...gameToAdd});
       setLists(updatedLists);
-      setGameToAdd({ title: '', category: '', description: '' }); // Reset input fields
+      setGameToAdd({ title: '', Notes: '', description: '' }); // Reset input fields
     }
   };
 
@@ -61,9 +61,9 @@ function GameLists() {
           />
           <input
             type="text"
-            value={gameToAdd.category}
-            onChange={(e) => setGameToAdd({ ...gameToAdd, category: e.target.value })}
-            placeholder="Category"
+            value={gameToAdd.Notes}
+            onChange={(e) => setGameToAdd({ ...gameToAdd, Notes: e.target.value })}
+            placeholder="Notes"
             className="game-input"
           />
 
@@ -78,7 +78,7 @@ function GameLists() {
             {list.games.map((game, gameIndex) => (
               <div key={gameIndex} className="game">
                 <p className="game-title">Title: {game.title}</p>
-                <p className="game-category">Category: {game.category}</p>
+                <p className="game-notes">Notes: {game.Notes}</p>
               </div>
             ))}
           </div>

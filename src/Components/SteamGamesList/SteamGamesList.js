@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 import { Heading } from '@aws-amplify/ui-react';
+import './SteamGamesList.css';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -11,7 +12,7 @@ function SteamGamesList() {
   const [totalPages, setTotalPages] = useState(0);
   const [achievements, setAchievements] = useState({});
   const [userSteamId, setUserSteamId] = useState(null);
-  const ngrokUrl = 'https://c7e4-2603-9000-9600-4501-00-1006.ngrok-free.app';
+  const ngrokUrl = 'https://6ee3-65-35-169-90.ngrok-free.app';
 
   //FIRST useEffect
 
@@ -19,18 +20,18 @@ function SteamGamesList() {
     const fetchGames = async (steamId) => {
       try {
         //const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
-        const response = await fetch(`${ngrokUrl}/getGames?userId=${steamId}`, {
+        const response = await fetch(`${ngrokUrl}/getGames/${steamId}`, {
           method: 'GET',
           headers: {
             'ngrok-skip-browser-warning': 'true',
-            Accept:'application/json'
+            Accept: 'application/json'
           },
         });
         const data = await response.json();
-        console.log(data)
-        if (data && data.response && data.response.games) {
-          setGames(data.response.games);
-          setTotalPages(Math.ceil(data.response.games.length / ITEMS_PER_PAGE));
+        //console.log(data)
+        if (data && Array.isArray(data)) { // Assuming 'data' is directly an array of games.
+          setGames(data);
+          setTotalPages(Math.ceil(data.length / ITEMS_PER_PAGE));
         } else {
           console.log('Games data is not in the expected format:', data);
         }
@@ -58,19 +59,29 @@ function SteamGamesList() {
   const fetchAchievements = async (steamId, appId) => {
     try {
       console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`);
-      //const response = await fetch(`http://localhost:8080/getAchievements?appId=${appId}&userId=${steamId}`);
-      const response = await fetch(`${ngrokUrl}/getAchievements?appId=${appId}&userId=${steamId}`);
-      const data = await response.json();
-      if (response.ok) {
+      const response = await fetch(`${ngrokUrl}/getAchievements/${steamId}/${appId}`, {
+        method: 'GET',
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+          Accept: 'application/json'
+        },
+      });
+      const data = await response.text(); // Get the response as text first
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else if (data === "-1") {
+        // No achievements for this game, handle as needed
         setAchievements(prevAchievements => ({
           ...prevAchievements,
-          [appId]: data.playerstats.achievements
+          [appId]: 0 // or [] if you prefer to use an empty array
         }));
       } else {
-        console.error(`Error fetching achievements: ${data.error}`);
+        // If the data is valid JSON, parse it and update the state
+        const jsonData = JSON.parse(data);
         setAchievements(prevAchievements => ({
           ...prevAchievements,
-          [appId]: []
+          [appId]: jsonData.playerstats?.achievements || []
         }));
       }
     } catch (error) {
@@ -151,15 +162,17 @@ function SteamGamesList() {
             <tr className='game-row' key={game.appid} data-status={game.status}>
               <td className='game-number'>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
               <td>
-                <img className='gamepic' src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`} alt={game.name} />
-              </td>
+                <img className='gamepic' src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appId}/${game.imageIcon}.jpg`} alt={game.name} />
+              </td>  
               <td>{game.name}</td>
               <td>
-                {achievements[game.appid] === undefined
-                  ? <button onClick={() => fetchAchievements(userSteamId, game.appid)} className='small-button'>Show %</button>
-                  : achievements[game.appid].length === 0
-                    ? 'N/A'
-                    : `${(achievements[game.appid].filter(a => a.achieved).length / achievements[game.appid].length * 100).toFixed(0)}%` //Change toFixed to whatever decimal place you guys want
+                {achievements[game.appid] ?
+                  achievements[game.appid].map((achievement, achievementIndex) => (
+                    <div key={achievementIndex}>
+                      {achievement.name}: {achievement.achieved ? 'Earned' : 'Not earned'}
+                    </div>
+                  ))
+                  : <button onClick={() => fetchAchievements(userSteamId, game.appId)} className='small-button'>Show %</button>
                 }
               </td>
               <td>

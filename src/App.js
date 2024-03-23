@@ -16,10 +16,10 @@ import RegisterPage from './Components/Auth/RegisterPage';
 import ValidatePage from './Components/Auth/ValidatePage';
 import ResetPass from './Components/Auth/ResetPass';
 import PrivateRoutes from './Components/Auth/PrivateRoute';
-import SteamGamesList from './Components/Home/SteamGamesList';
+import SteamGamesList from './Components/SteamGamesList/SteamGamesList';
 import ForumPage from './Components/Discussions/HomePage';
-import Friends from './Components/Home/Friends';
-import GameLists from './Components/Home/List';
+import Friends from './Components/Friends/Friends';
+import GameLists from './Components/GameLists/GameList';
 
 Amplify.configure(awsExports);
 
