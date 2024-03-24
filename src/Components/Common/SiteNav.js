@@ -49,8 +49,9 @@ const SiteNav = () => {
                                 <>
                                     <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                                     <Nav.Link as={Link} to="/lists">Lists</Nav.Link>
-                                    <Nav.Link as={Link} to="/forumpage">Forums</Nav.Link>
+                                    <Nav.Link as={Link} to="/forumpage">Forum</Nav.Link>
                                     <Nav.Link as={Link} to="/friends">Friends</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
                                     <Nav.Link onClick={handleSignOut}>Sign Out</Nav.Link>
                                 </>
                             ) : (

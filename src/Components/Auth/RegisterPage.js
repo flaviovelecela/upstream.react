@@ -12,7 +12,7 @@ function RegisterPage() {
 
     const { setIsLoggedIn } = useAuth();
 
-    async function handleSignUp({ SteamID, password, email }, setFormState) {
+    async function handleSignUp({ DisplayName, SteamID, password, email }, setFormState) {
         console.log('Attempting to sign up:', email); // Debugging
         try {
             const { userId } = await signUp({
@@ -20,6 +20,7 @@ function RegisterPage() {
                 password,
                 options: {
                     userAttributes: {
+                        'custom:DisplayName': DisplayName,
                         'custom:SteamID': SteamID,
                     },
                 },
@@ -49,6 +50,7 @@ function RegisterPage() {
     }
 
     const [formState, setFormState] = useState({
+        DisplayName: '',
         SteamID: '',
         email: '',
         password: '',
@@ -70,6 +72,7 @@ function RegisterPage() {
             }
 
             await handleSignUp({
+                DisplayName: formState.DisplayName,
                 SteamID: formState.SteamID,
                 password: formState.password,
                 email: formState.email
@@ -90,6 +93,11 @@ function RegisterPage() {
             <Row className="px-4 my-5">
                 <Col sm={6}>
                     <Form onSubmit={handleSubmit}>
+
+                    <Form.Group className="mb-3" controlId="DisplayName">
+                            <Form.Label><div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>Display Name</div></Form.Label>
+                            <Form.Control type="text" placeholder="Please enter your display name" value={formState.DisplayName} onChange={setFormValue('DisplayName')} required />
+                        </Form.Group>
 
                         <Form.Group className="mb-3" controlId="SteamID">
                             <Form.Label><div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>SteamID<Tooltip_SteamID_Alert /></div></Form.Label>

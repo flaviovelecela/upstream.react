@@ -20,6 +20,7 @@ import SteamGamesList from './Components/SteamGamesList/SteamGamesList';
 import ForumPage from './Components/Discussions/HomePage';
 import Friends from './Components/Friends/Friends';
 import GameLists from './Components/GameLists/GameList';
+import ProfilePage from './Components/UserProfile/UserProfile';
 
 Amplify.configure(awsExports);
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/forumpage' element = {<ForumPage />} exact />
             <Route path='/friends' element = {<Friends />} exact />
             <Route path='/lists' element = {<GameLists />} exact/>
+            <Route path='/profile' element = {<ProfilePage/>} exact/>
           </Route>
 
         </Routes>
