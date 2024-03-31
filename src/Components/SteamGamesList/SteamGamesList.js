@@ -12,31 +12,33 @@ function SteamGamesList() {
   const [totalPages, setTotalPages] = useState(0);
   const [achievements, setAchievements] = useState({});
   const [userSteamId, setUserSteamId] = useState(null);
-  const ngrokUrl = 'https://6ee3-65-35-169-90.ngrok-free.app';
+  const ngrokUrl = 'https://af64-2603-9000-9600-4501-00-100a.ngrok-free.app';
 
   //FIRST useEffect
-
   useEffect(() => {
-    const fetchGames = async (steamId) => {
+    const fetchGames = async (steamId, pageNumber) => {
+      const offset = (pageNumber - 1) * ITEMS_PER_PAGE;
       try {
-        //const response = await fetch(`http://localhost:8080/getGames?userId=${steamId}`);
-        const response = await fetch(`${ngrokUrl}/getGames/${steamId}`, {
-          method: 'GET',
-          headers: {
-            'ngrok-skip-browser-warning': 'true',
-            Accept: 'application/json'
-          },
-        });
+        const response = await fetch(
+          `${ngrokUrl}/getGames/${steamId}?start=${offset}&count=${ITEMS_PER_PAGE}`,
+          {
+            method: 'GET',
+            headers: {
+              'ngrok-skip-browser-warning': 'true',
+              Accept: 'application/json'
+            },
+          }
+        );
         const data = await response.json();
-        //console.log(data)
-        if (data && Array.isArray(data)) { // Assuming 'data' is directly an array of games.
+        console.log(data)
+        if (response.ok && Array.isArray(data)) {
           setGames(data);
-          setTotalPages(Math.ceil(data.length / ITEMS_PER_PAGE));
+          setTotalPages(Math.ceil(data.totalNumberOfGames / ITEMS_PER_PAGE));
         } else {
-          console.log('Games data is not in the expected format:', data);
+          console.error('Games data is not in the expected format:', data);
         }
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error('Error fetching games:', error);
       }
     };
 
@@ -44,21 +46,22 @@ function SteamGamesList() {
       try {
         const attributes = await fetchUserAttributes();
         console.log('User attributes:', attributes);
-        const steamId = attributes['custom:SteamID']; // Access the SteamID directly
+        const steamId = attributes['custom:SteamID'];
         if (steamId) {
           setUserSteamId(steamId);
-          fetchGames(steamId);
+          await fetchGames(steamId, currentPage);
         }
       } catch (error) {
-        console.error('Error fetching SteamID: ', error);
+        console.error('Error fetching SteamID:', error);
       }
     };
+
     fetchSteamId();
-  }, []);
+  }, [currentPage]);
 
   const fetchAchievements = async (steamId, appId) => {
+    console.log(`Fetching achievements for steamId: ${steamId}, appId: ${appId}`);
     try {
-      console.log(`Fetching achievements for appid=${appId} and steamid=${steamId}`);
       const response = await fetch(`${ngrokUrl}/getAchievements/${steamId}/${appId}`, {
         method: 'GET',
         headers: {
@@ -66,26 +69,30 @@ function SteamGamesList() {
           Accept: 'application/json'
         },
       });
-      const data = await response.text(); // Get the response as text first
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
-      } else if (data === "-1") {
-        // No achievements for this game, handle as needed
-        setAchievements(prevAchievements => ({
-          ...prevAchievements,
-          [appId]: 0 // or [] if you prefer to use an empty array
-        }));
-      } else {
-        // If the data is valid JSON, parse it and update the state
-        const jsonData = JSON.parse(data);
-        setAchievements(prevAchievements => ({
-          ...prevAchievements,
-          [appId]: jsonData.playerstats?.achievements || []
-        }));
       }
+
+      const text = await response.text();
+      let data = text === "-1" ? -1 : JSON.parse(text);
+
+      // If the data is a number, store it directly.
+      if (!isNaN(data)) {
+        data = parseInt(data); // or parseFloat(data) if the number can be a float
+      }
+
+      setAchievements(prevAchievements => ({
+        ...prevAchievements,
+        [appId]: data.playerstats?.achievements || data
+      }));
+
     } catch (error) {
       console.error('Error fetching achievements:', error);
+      setAchievements(prevAchievements => ({
+        ...prevAchievements,
+        [appId]: -1 // Indicates an error occurred
+      }));
     }
   };
 
@@ -159,20 +166,25 @@ function SteamGamesList() {
             <th>Status</th>
           </tr>
           {selectedGames.map((game, index) => (
-            <tr className='game-row' key={game.appid} data-status={game.status}>
+            <tr className='game-row' key={game.appId} data-status={game.status}>
               <td className='game-number'>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
               <td>
                 <img className='gamepic' src={`https://media.steampowered.com/steamcommunity/public/images/apps/${game.appId}/${game.imageIcon}.jpg`} alt={game.name} />
-              </td>  
+              </td>
               <td>{game.name}</td>
               <td>
-                {achievements[game.appid] ?
-                  achievements[game.appid].map((achievement, achievementIndex) => (
-                    <div key={achievementIndex}>
-                      {achievement.name}: {achievement.achieved ? 'Earned' : 'Not earned'}
-                    </div>
-                  ))
-                  : <button onClick={() => fetchAchievements(userSteamId, game.appId)} className='small-button'>Show %</button>
+                {
+                  achievements[game.appId] === -1
+                    ? 'No achievements'
+                    : typeof achievements[game.appId] === 'number'
+                      ? `${achievements[game.appId]}%`
+                      : Array.isArray(achievements[game.appId]) && achievements[game.appId].length > 0
+                        ? achievements[game.appId].map((achievement, index) => (
+                          <div key={index}>
+                            {achievement.name || `Achievement ${index + 1}`}: {achievement.achieved ? 'Earned' : 'Not earned'}
+                          </div>
+                        ))
+                        : <button onClick={() => fetchAchievements(userSteamId, game.appId)} className='small-button'>Show %</button>
                 }
               </td>
               <td>
