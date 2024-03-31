@@ -16,40 +16,38 @@ function SteamGamesList() {
 
   //FIRST useEffect
   useEffect(() => {
-    const fetchGames = async (steamId, pageNumber) => {
-      const offset = (pageNumber - 1) * ITEMS_PER_PAGE;
+    const fetchGames = async (steamId) => {
+      const cachedGames = localStorage.getItem(`games-${steamId}`);
+      if (cachedGames) {
+        setGames(JSON.parse(cachedGames));
+        return;
+      }
+
       try {
-        const response = await fetch(
-          `${ngrokUrl}/getGames/${steamId}?start=${offset}&count=${ITEMS_PER_PAGE}`,
-          {
-            method: 'GET',
-            headers: {
-              'ngrok-skip-browser-warning': 'true',
-              Accept: 'application/json'
-            },
-          }
-        );
+        const response = await fetch(`${ngrokUrl}/getGames/${steamId}`, {
+          method: 'GET',
+          headers: {
+            'ngrok-skip-browser-warning': 'true',
+            Accept: 'application/json'
+          },
+        });
+
         const data = await response.json();
-        console.log(data)
-        if (response.ok && Array.isArray(data)) {
-          setGames(data);
-          setTotalPages(Math.ceil(data.totalNumberOfGames / ITEMS_PER_PAGE));
-        } else {
-          console.error('Games data is not in the expected format:', data);
-        }
+        localStorage.setItem(`games-${steamId}`, JSON.stringify(data));
+        setGames(data);
+        setTotalPages(Math.ceil(data.length / ITEMS_PER_PAGE));
       } catch (error) {
-        console.error('Error fetching games:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
     const fetchSteamId = async () => {
       try {
         const attributes = await fetchUserAttributes();
-        console.log('User attributes:', attributes);
         const steamId = attributes['custom:SteamID'];
         if (steamId) {
           setUserSteamId(steamId);
-          await fetchGames(steamId, currentPage);
+          fetchGames(steamId);
         }
       } catch (error) {
         console.error('Error fetching SteamID:', error);
@@ -57,7 +55,7 @@ function SteamGamesList() {
     };
 
     fetchSteamId();
-  }, [currentPage]);
+  }, []);
 
   const fetchAchievements = async (steamId, appId) => {
     console.log(`Fetching achievements for steamId: ${steamId}, appId: ${appId}`);
